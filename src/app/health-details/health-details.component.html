@@ -1,0 +1,8 @@
+<h2>Health Data</h2>
+<ul class="healthData">
+  <li *ngFor="let healthModel of healthModels">
+    <span class="badge">{{healthModel.date | date : 'short'}}</span> {{healthModel.steps}}
+  </li>
+</ul>
+
+<app-charts [healthModels]="healthModels"></app-charts>
