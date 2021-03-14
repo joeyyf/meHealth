@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { HealthModel } from '../healthModel';
 
 @Component({
@@ -9,6 +9,12 @@ import { HealthModel } from '../healthModel';
 export class ChartsComponent implements OnInit {
 
   @Input() healthModels: HealthModel[] = [];
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['healthModels']) {
+      this.setChartData();
+    }
+  }
 
   constructor() { }
 
@@ -29,7 +35,6 @@ export class ChartsComponent implements OnInit {
   public barChartData = [];
 
   ngOnInit(): void {
-    this.setChartData();
   }
 
   setChartData(): void {
@@ -37,8 +42,7 @@ export class ChartsComponent implements OnInit {
     this.barChartData = [
       {data: this.healthModels.map(x => x.steps), label: "steps"},
       {data: this.healthModels.map(x => x.heartRate), label: "heartRate"},
-      {data: this.healthModels.map(x => x.rawIntensity), label: "rawIntensity"},
-      {data: this.healthModels.map(x => x.rawKind), label: "rawKind"},
+      {data: this.healthModels.map(x => x.rawIntensity), label: "rawIntensity"}
     ];
   }
 

@@ -11,18 +11,34 @@ import { ChartsComponent } from './charts/charts.component';
 
 import { registerLocaleData } from "@angular/common";
 import localeDe from "@angular/common/locales/de";
+import { HeaderComponent } from './header/header.component';
+
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { MdbModule } from 'mdb-angular-ui-kit';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
+import { HttpClientModule } from '@angular/common/http';
+import { HealthDetailsWeeklyComponent } from './health-details-weekly/health-details-weekly.component';
+import { HealthDetailsMonthlyComponent } from './health-details-monthly/health-details-monthly.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HealthDetailsComponent,
     MessagesComponent,
-    ChartsComponent
+    ChartsComponent,
+    HeaderComponent,
+    HealthDetailsWeeklyComponent,
+    HealthDetailsMonthlyComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ChartsModule
+    ChartsModule,
+    MdbModule,
+    NoopAnimationsModule,
+    NgbModule,
+    HttpClientModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: "de-DE" }

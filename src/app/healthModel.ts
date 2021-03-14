@@ -1,6 +1,6 @@
 export interface HealthModel {
-  timestamp: number;
   date: Date;
+  timestamp: number;
   deviceId: number;
   userId: number;
   rawIntensity: number;

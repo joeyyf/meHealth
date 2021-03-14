@@ -1,8 +1,56 @@
-<h2>Health Data</h2>
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+        <div class="card card-primary">
+            <div class="stat-widget-two card-body">
+                <div class="stat-content">
+                    <div class="stat-text">
+                      <i class="bi-heart"></i>
+                      <a>Heart Rate Avg.</a>
+                      <div class="stat-digit">
+                        {{heartRateAvg | number : '1.2-2'}}
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm">
+        <div class="card card-secondary">
+            <div class="stat-widget-two card-body">
+                <div class="stat-content">
+                    <div class="stat-text">
+                      <i class="bi-geo"></i>
+                      <a>Steps</a>
+                    <div class="stat-digit"> <i class="fa fa-usd"></i>{{stepCountTotal}}</div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm">
+        <div class="card card-warning">
+            <div class="stat-widget-two card-body">
+                <div class="stat-content">
+                  <div class="stat-text">
+                    <i class="bi-lightning-charge"></i>
+                    <a>Raw Intensity Avg.</a>
+                    <div class="stat-digit"> <i class="fa fa-usd"></i>{{rawIntensityAvg | number : '1.2-2'}}</div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="card">
+  <app-charts [healthModels]="healthModels"></app-charts>
+</div>
+
 <ul class="healthData">
   <li *ngFor="let healthModel of healthModels">
-    <span class="badge">{{healthModel.date | date : 'short'}}</span> {{healthModel.steps}}
+    <span class="badge">{{healthModel.date | date : 'short'}}</span> {{healthModel.steps}} {{healthModel.heartRate}}
   </li>
 </ul>
-
-<app-charts [healthModels]="healthModels"></app-charts>
