@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SmartWatchService } from '../smart-watch.service';
 import { HealthModel } from '../healthModel';
-import { HealthWrapperModel } from '../healthWrapperModel';
+import {NgbCalendar, NgbDate} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-health-details',
@@ -14,15 +14,20 @@ export class HealthDetailsComponent implements OnInit {
   heartRateAvg: number;
   stepCountTotal: number;
   rawIntensityAvg : number;
+  today = new Date();
+  dateToShow: NgbDate = new NgbDate(this.today.getFullYear(), this.today.getMonth() + 1, this.today.getUTCDate());
 
-  constructor(private smartWatchService: SmartWatchService) { }
+  constructor(
+    private smartWatchService: SmartWatchService,
+    private calendar: NgbCalendar
+  ) { }
 
   ngOnInit(): void {
     this.getHealthData();
   }
 
   getHealthData(): void {
-    this.smartWatchService.getHealthData()
+    this.smartWatchService.getHealthData(new Date(this.dateToShow.year, this.dateToShow.month - 1, this.dateToShow.day))
       .subscribe(healthWrapperModel => {
         this.healthModels = healthWrapperModel.data;
 
@@ -37,6 +42,15 @@ export class HealthDetailsComponent implements OnInit {
         const steps = this.healthModels.map(x => x.steps);
         this.stepCountTotal = steps.reduce((a, b) => a + b, 0);
       });
+  }
+
+  onDateSelect($event): void {
+    this.getHealthData();
+  }
+
+  selectToday() {
+    this.dateToShow = this.calendar.getToday();
+    this.getHealthData();
   }
 
 }

@@ -53,7 +53,7 @@ input {
 
 /* temp */
 .card {
-    margin-top: 1.875rem;
+    margin-top: 1rem;
     background-color: #fff;
     transition: all .5s ease-in-out;
     position: relative;
@@ -75,7 +75,28 @@ input {
 .card-warning {
   background-color: #fd7e14;
 }
-
+.stat-content-icon {
+  font-size: 3rem;
+}
+.stat-content-icon-primary {
+  color: #ab1f1d;
+}
+.stat-content-icon-secondary {
+  color: #285599;
+}
+.stat-content-icon-warning {
+  color: #c4722e;
+}
 .stat-text {
   color: #fff
+}
+.input-group {
+  margin-top: 1rem;
+}
+.btn {
+  margin-left: 0.5rem;
+}
+.stat-digit {
+  font-size: 2rem;
+  font-weight: bold;
 }

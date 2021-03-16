@@ -21,6 +21,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { HealthDetailsWeeklyComponent } from './health-details-weekly/health-details-weekly.component';
 import { HealthDetailsMonthlyComponent } from './health-details-monthly/health-details-monthly.component';
 
+import { FormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,6 +41,7 @@ import { HealthDetailsMonthlyComponent } from './health-details-monthly/health-d
     NoopAnimationsModule,
     NgbModule,
     HttpClientModule,
+    FormsModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: "de-DE" }

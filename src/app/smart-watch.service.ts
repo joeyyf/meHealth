@@ -13,17 +13,26 @@ import { catchError, map, tap } from 'rxjs/operators';
 export class SmartWatchService {
 
   tempHealthModels: HealthModel[] = [];
-  private healthDataUrl = 'http://localhost:8000/api/healthData';  // URL to web api
+  private healthDataUrl = 'http://localhost:8000/api/healthData/';  // URL to web api
 
   constructor(
     private messageService: MessageService,
     private http: HttpClient
   ) { }
 
-  getHealthData(): Observable<HealthWrapperModel> {
-    return this.http.get<HealthWrapperModel>(this.healthDataUrl)
+  getHealthData(dateToShow: Date): Observable<HealthWrapperModel> {
+
+    //get and format date for api call
+    var dd = String(dateToShow.getDate()).padStart(2, '0');
+    var mm = String(dateToShow.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = dateToShow.getFullYear();
+
+    var formattedDate = yyyy + '-' + mm + '-' + dd;
+
+    return this.http.get<HealthWrapperModel>(this.healthDataUrl.concat(formattedDate))
       .pipe(
         tap((receivedData: HealthWrapperModel) => console.log(receivedData)),
+        tap(() => this.log(`getHealthData() with date ${formattedDate}`)),
         catchError(this.handleError<HealthWrapperModel>('getHealthData'))
     );
   }
