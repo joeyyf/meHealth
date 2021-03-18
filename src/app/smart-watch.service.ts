@@ -12,7 +12,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 export class SmartWatchService {
 
   tempHealthModels: HealthModel[] = [];
-  private healthDataUrl = 'http://fileserver:8000/api/healthData/';  // URL to web api
+  private healthDataUrl = 'http://localhost:8000/api/healthData/';  // URL to web api
 
   constructor(
     private messageService: MessageService,
@@ -36,6 +36,26 @@ export class SmartWatchService {
         tap((receivedData: HealthWrapperModel) => console.log(receivedData)),
         tap(() => this.log(`getHealthData() with date ${formattedDate}`)),
         catchError(this.handleError<HealthWrapperModel>('getHealthData'))
+    );
+  }
+
+  /**
+  * Get weekly health data from REST service api by given date (-7 days)
+  */
+  getWeeklyHealthData(dateToShow: Date): Observable<HealthWrapperModel> {
+
+    //get and format date for api call
+    var dd = String(dateToShow.getDate()).padStart(2, '0');
+    var mm = String(dateToShow.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = dateToShow.getFullYear();
+
+    var formattedDate = yyyy + '-' + mm + '-' + dd;
+
+    return this.http.get<HealthWrapperModel>(this.healthDataUrl.concat("week/", formattedDate))
+      .pipe(
+        tap((receivedData: HealthWrapperModel) => console.log(receivedData)),
+        tap(() => this.log(`getWeeklyHealthData() with date ${formattedDate}`)),
+        catchError(this.handleError<HealthWrapperModel>('getWeeklyHealthData'))
     );
   }
 

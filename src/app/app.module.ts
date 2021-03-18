@@ -19,9 +19,9 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { HttpClientModule } from '@angular/common/http';
 import { HealthDetailsWeeklyComponent } from './health-details-weekly/health-details-weekly.component';
-import { HealthDetailsMonthlyComponent } from './health-details-monthly/health-details-monthly.component';
 
 import { FormsModule } from '@angular/forms';
+import { ChartsWeeklyComponent } from './charts-weekly/charts-weekly.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +31,7 @@ import { FormsModule } from '@angular/forms';
     ChartsComponent,
     HeaderComponent,
     HealthDetailsWeeklyComponent,
-    HealthDetailsMonthlyComponent
+    ChartsWeeklyComponent
   ],
   imports: [
     BrowserModule,

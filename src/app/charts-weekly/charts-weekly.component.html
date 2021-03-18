@@ -1,0 +1,29 @@
+<div>
+  <div style="display: block">
+    <canvas baseChart #mychart (click)="showData($event)"
+            [datasets]="barChartStepData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType">
+    </canvas>
+  </div>
+  <div style="display: block">
+    <canvas baseChart
+            [datasets]="barChartHeartRateData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType">
+    </canvas>
+  </div>
+  <div style="display: block">
+    <canvas baseChart
+            [datasets]="barChartRawIntensityData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType">
+    </canvas>
+  </div>
+</div>

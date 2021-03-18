@@ -1,1 +1,24 @@
-<p>weekly component TODO</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <form class="form-inline">
+        <div class="form-group">
+          <div class="input-group">
+            <input class="form-control" placeholder="dd.mm.yyyy" name="dp" [(ngModel)]="dateToShow" (dateSelect)="onDateSelect($event)" ngbDatepicker #d="ngbDatepicker">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
+                <i class="bi-calendar-date"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-primary mr-2" (click)="selectToday()">Select Today</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="card">
+      <app-charts-weekly [healthModels]="healthModels" [dateToShow]="dateToShow"></app-charts-weekly>
+    </div>
+  </div>
+</div>

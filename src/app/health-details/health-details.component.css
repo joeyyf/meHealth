@@ -73,7 +73,7 @@ input {
   background-color: #dc3545;
 }
 .card-warning {
-  background-color: #fd7e14;
+  background-color: #ffc107;
 }
 .stat-content-icon {
   font-size: 3rem;
@@ -85,7 +85,7 @@ input {
   color: #285599;
 }
 .stat-content-icon-warning {
-  color: #c4722e;
+  color: #d19d02;
 }
 .stat-text {
   color: #fff
@@ -99,4 +99,12 @@ input {
 .stat-digit {
   font-size: 2rem;
   font-weight: bold;
+}
+.progress {
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  margin-top: .8em;
+}
+a {
+  font-size: 1rem;
+  font-weight: normal;
 }

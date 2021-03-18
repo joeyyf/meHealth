@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { SmartWatchService } from '../smart-watch.service';
+import { HealthModel } from '../healthModel';
+import { NgbCalendar, NgbDate } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-health-details-weekly',
@@ -7,9 +10,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HealthDetailsWeeklyComponent implements OnInit {
 
-  constructor() { }
+  healthModels: HealthModel[] = [];
+  today = new Date();
+  dateToShow: NgbDate = new NgbDate(this.today.getFullYear(), this.today.getMonth() + 1, this.today.getUTCDate());
+
+  constructor(
+    private smartWatchService: SmartWatchService,
+    private calendar: NgbCalendar
+  ) { }
 
   ngOnInit(): void {
+    this.getHealthData();
+  }
+
+  getHealthData(): void {
+    this.smartWatchService.getWeeklyHealthData(new Date(this.dateToShow.year, this.dateToShow.month - 1, this.dateToShow.day))
+      .subscribe(healthWrapperModel => {
+        this.healthModels = healthWrapperModel.data;
+      });
+  }
+
+  onDateSelect($event): void {
+    this.getHealthData();
+  }
+
+  selectToday() {
+    this.dateToShow = this.calendar.getToday();
+    this.getHealthData();
   }
 
 }

@@ -1,10 +1,12 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { HealthModel } from '../healthModel';
 
 @Component({
   selector: 'app-charts',
   templateUrl: './charts.component.html',
-  styleUrls: ['./charts.component.css']
+  styleUrls: ['./charts.component.css'],
+  providers: [DatePipe]
 })
 export class ChartsComponent implements OnInit {
 
@@ -16,17 +18,11 @@ export class ChartsComponent implements OnInit {
     }
   }
 
-  constructor() { }
+  constructor(private datepipe: DatePipe) { }
 
   public barChartOptions = {
     scaleShowVerticalLines: false,
-    responsive: true,
-    scales: {
-      xAxes: [{
-        type: "time"
-        }
-      ]
-    }
+    responsive: true
   };
 
   public barChartLabels = [];
@@ -38,7 +34,7 @@ export class ChartsComponent implements OnInit {
   }
 
   setChartData(): void {
-    this.barChartLabels = this.healthModels.map(x => x.date);
+    this.barChartLabels = this.healthModels.map(x => this.datepipe.transform(x.date, "HH:mm"));
     this.barChartData = [
       {data: this.healthModels.map(x => x.steps), label: "steps"},
       {data: this.healthModels.map(x => x.heartRate), label: "heartRate"},
