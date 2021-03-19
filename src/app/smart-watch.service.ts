@@ -12,7 +12,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 export class SmartWatchService {
 
   tempHealthModels: HealthModel[] = [];
-  private healthDataUrl = 'http://localhost:8000/api/healthData/';  // URL to web api
+  private healthDataUrl = 'http://fileserver:8000/api/healthData/';  // URL to web api
 
   constructor(
     private messageService: MessageService,

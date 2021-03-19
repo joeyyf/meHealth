@@ -27,6 +27,8 @@ export class HealthDetailsComponent implements OnInit {
   today = new Date();
   dateToShow: NgbDate = new NgbDate(this.today.getFullYear(), this.today.getMonth() + 1, this.today.getUTCDate());
 
+  isLoading = true;
+
   constructor(
     private smartWatchService: SmartWatchService,
     private calendar: NgbCalendar,
@@ -48,6 +50,9 @@ export class HealthDetailsComponent implements OnInit {
   }
 
   getHealthData(): void {
+
+    this.isLoading = true;
+
     this.smartWatchService.getHealthData(new Date(this.dateToShow.year, this.dateToShow.month - 1, this.dateToShow.day))
       .subscribe(healthWrapperModel => {
         this.healthModels = healthWrapperModel.data;
@@ -65,6 +70,8 @@ export class HealthDetailsComponent implements OnInit {
         const steps = this.healthModels.map(x => x.steps);
         this.stepCountTotal = steps.reduce((a, b) => a + b, 0);
         this.stepCountPercent = this.stepCountTotal/this.stepCountMax;
+
+        this.isLoading = false;
       });
   }
 

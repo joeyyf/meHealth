@@ -14,6 +14,8 @@ export class HealthDetailsWeeklyComponent implements OnInit {
   today = new Date();
   dateToShow: NgbDate = new NgbDate(this.today.getFullYear(), this.today.getMonth() + 1, this.today.getUTCDate());
 
+  isLoading = true;
+
   constructor(
     private smartWatchService: SmartWatchService,
     private calendar: NgbCalendar
@@ -24,9 +26,14 @@ export class HealthDetailsWeeklyComponent implements OnInit {
   }
 
   getHealthData(): void {
+
+    this.isLoading = true;
+
     this.smartWatchService.getWeeklyHealthData(new Date(this.dateToShow.year, this.dateToShow.month - 1, this.dateToShow.day))
       .subscribe(healthWrapperModel => {
         this.healthModels = healthWrapperModel.data;
+
+        this.isLoading = false;
       });
   }
 
