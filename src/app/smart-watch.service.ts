@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HealthModel } from './healthModel';
 import { HealthWrapperModel } from './healthWrapperModel';
+import { DateWrapperModel } from './dateWrapperModel';
 import { Observable, of } from 'rxjs';
 import { MessageService } from './message.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -56,6 +57,16 @@ export class SmartWatchService {
         tap((receivedData: HealthWrapperModel) => console.log(receivedData)),
         tap(() => this.log(`getWeeklyHealthData() with date ${formattedDate}`)),
         catchError(this.handleError<HealthWrapperModel>('getWeeklyHealthData'))
+    );
+  }
+
+  getLastImportDate(): Observable<DateWrapperModel> {
+
+    return this.http.get<DateWrapperModel>(this.healthDataUrl.concat("date/last/"))
+      .pipe(
+        tap((receivedData: DateWrapperModel) => console.log(receivedData)),
+        tap(() => this.log('getLastImportDate()')),
+        catchError(this.handleError<DateWrapperModel>('getLastImportDate'))
     );
   }
 

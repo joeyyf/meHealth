@@ -26,6 +26,7 @@ export class HealthDetailsComponent implements OnInit {
 
   today = new Date();
   dateToShow: NgbDate = new NgbDate(this.today.getFullYear(), this.today.getMonth() + 1, this.today.getUTCDate());
+  lastFoundDate = new Date();
 
   isLoading = true;
 
@@ -47,6 +48,7 @@ export class HealthDetailsComponent implements OnInit {
     }
 
     this.getHealthData();
+    this.setLastImportDate();
   }
 
   getHealthData(): void {
@@ -72,6 +74,14 @@ export class HealthDetailsComponent implements OnInit {
         this.stepCountPercent = this.stepCountTotal/this.stepCountMax;
 
         this.isLoading = false;
+      });
+  }
+
+  setLastImportDate(): void {
+
+    this.smartWatchService.getLastImportDate()
+      .subscribe(dateWrapperModel => {
+        this.lastFoundDate = dateWrapperModel.data.date;
       });
   }
 
