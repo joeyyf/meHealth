@@ -23,6 +23,8 @@ import { HealthDetailsWeeklyComponent } from './health-details-weekly/health-det
 import { FormsModule } from '@angular/forms';
 import { ChartsWeeklyComponent } from './charts-weekly/charts-weekly.component';
 
+import { ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +43,8 @@ import { ChartsWeeklyComponent } from './charts-weekly/charts-weekly.component';
     NoopAnimationsModule,
     NgbModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: "de-DE" }

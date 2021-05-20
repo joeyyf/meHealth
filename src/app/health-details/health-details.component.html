@@ -1,9 +1,10 @@
 <div class="container">
   <div class="row">
-    <div class="col-sm">
+    <div class="col-12">
       <form class="form-inline">
         <div class="form-group">
           <div class="input-group">
+            <i class="bi-calendar-event input-pre-icon"></i>
             <input class="form-control" placeholder="dd.mm.yyyy" name="dp" [(ngModel)]="dateToShow" (dateSelect)="onDateSelect($event)" ngbDatepicker #d="ngbDatepicker">
             <div class="input-group-append">
               <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
@@ -17,7 +18,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-sm">
+    <div class="col-lg">
         <div class="card card-secondary">
             <div class="stat-widget-two card-body">
               <div class="row">
@@ -29,7 +30,7 @@
                       <div class="stat-text">
                         <a>Steps Total</a>
                       <div class="stat-digit">
-                        {{stepCountTotal}}<a> / {{ stepCountMax }}</a>
+                        {{stepCountTotal}}<a> / {{ stepCountMaxHelper }}</a>
                       </div>
                     </div>
                   </div>
@@ -50,7 +51,7 @@
             </div>
         </div>
     </div>
-    <div class="col-sm">
+    <div class="col-lg">
         <div class="card card-primary">
             <div class="stat-widget-two card-body">
               <div class="row">
@@ -71,11 +72,7 @@
               <div class="row">
                 <div class="col-12 align-items-center">
                   <div class="progress">
-                    <div class="progress-bar progress-bar-striped" role="progressbar"
-                      [style.width]="heartRatePercent * 100 + '%'">
-                      <div class="stat-percent">
-                        {{heartRatePercent | percent}}
-                      </div>
+                    <div class="progress-bar progress-bar-striped" role="progressbar">
                     </div>
                   </div>
                 </div>
@@ -83,7 +80,7 @@
             </div>
         </div>
     </div>
-    <div class="col-sm">
+    <div class="col-lg">
         <div class="card card-warning">
             <div class="stat-widget-two card-body">
               <div class="row">
@@ -104,10 +101,42 @@
               <div class="row">
                 <div class="col-12 align-items-center">
                   <div class="progress">
-                    <div class="progress-bar progress-bar-striped bg-warning" role="progressbar"
-                      [style.width]="rawIntensityPercent * 100 + '%'">
+                    <div class="progress-bar progress-bar-striped bg-warning" role="progressbar">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg">
+        <div class="card card-info">
+            <div class="stat-widget-two card-body">
+              <div class="row">
+                <div class="col-3 stat-content-icon stat-content-icon-info">
+                  <i class="bi-speedometer"></i>
+                </div>
+                <div class="col-7 d-flex align-items-center">
+                  <div class="stat-content">
+                    <div class="stat-text">
+                      <a>Weight</a>
+                      <div class="stat-digit">
+                        {{weight}}<a> kg</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-2 d-flex align-items-center">
+                  <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#exampleModal">+</button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 align-items-center">
+                  <div class="progress">
+                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
+                      [style.width]="weightPercent * 100 + '%'">
                       <div class="stat-percent">
-                        {{rawIntensityPercent | percent}}
+                        {{weightPercent | percent}}
                       </div>
                     </div>
                   </div>
@@ -124,7 +153,14 @@
 </div>
 
 <div class="card">
-  <b>Last found datetime:</b> {{lastFoundDate}}
+  <div class="row">
+    <div class="col-3">
+      <b>Last found entry:</b>
+    </div>
+    <div class="col-9">
+      {{lastFoundDate}}
+    </div>
+  </div>
 </div>
 
 <div class="card">
@@ -147,6 +183,25 @@
       <td>{{healthModel.rawIntensity}}</td>
     </tr>
   </table>
+</div>
+
+<!-- Modal for weight input-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add/update weight for this day ...</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <label for="exampleFormControlInput1" class="form-label">New weight</label>
+        <input type="number" min="0" max="100" required class="form-control" placeholder="80" [(ngModel)]="weightInput">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="saveAndUpdateWeight()" data-bs-dismiss="modal">Save changes</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div id="overlay" *ngIf="isLoading">

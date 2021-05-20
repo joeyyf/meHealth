@@ -75,8 +75,12 @@ input {
 .card-warning {
   background-color: #ffc107;
 }
+.card-info {
+  background-color: #198754;
+}
 .stat-content-icon {
   font-size: 3rem;
+  color: #dbdbdb;
 }
 .stat-content-icon-primary {
   color: #ab1f1d;
@@ -86,6 +90,9 @@ input {
 }
 .stat-content-icon-warning {
   color: #d19d02;
+}
+.stat-content-icon-info {
+  color: #13633e;
 }
 .stat-text {
   color: #fff
@@ -126,4 +133,12 @@ a {
   position: absolute;
   top: 50%;
   left: 50%;
+}
+.btn {
+  margin: 0.5rem;
+}
+.input-pre-icon {
+  font-size: 2rem;
+  margin-right: 0.5rem;
+  color: lightgray;
 }

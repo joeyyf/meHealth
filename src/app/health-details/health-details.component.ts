@@ -13,20 +13,22 @@ export class HealthDetailsComponent implements OnInit {
 
   healthModels: HealthModel[] = [];
   heartRateAvg: number;
-  heartRateMax: number = 190; //220 - age = Maximum Heart Rate (MHR) for runners; resting HR 60-100
-  heartRatePercent: number;
 
   stepCountTotal: number;
   stepCountMax: number = 10000;
+  stepCountMaxHelper: string = "10k";
   stepCountPercent: number;
 
   rawIntensityAvg : number;
-  rawIntensityMax: number = 125;
-  rawIntensityPercent: number;
 
   today = new Date();
   dateToShow: NgbDate = new NgbDate(this.today.getFullYear(), this.today.getMonth() + 1, this.today.getUTCDate());
   lastFoundDate = new Date();
+
+  weight: number;
+  weightTarget: number = 80;
+  weightPercent: number;
+  weightInput: number;
 
   isLoading = true;
 
@@ -47,7 +49,7 @@ export class HealthDetailsComponent implements OnInit {
         console.log(year, month, day);
     }
 
-    this.getHealthData();
+    this.refreshData();
     this.setLastImportDate();
   }
 
@@ -57,23 +59,42 @@ export class HealthDetailsComponent implements OnInit {
 
     this.smartWatchService.getHealthData(new Date(this.dateToShow.year, this.dateToShow.month - 1, this.dateToShow.day))
       .subscribe(healthWrapperModel => {
+
         this.healthModels = healthWrapperModel.data;
 
         const heartRates = this.healthModels.map(x => x.heartRate);
         const sumHeartRates = heartRates.reduce((a, b) => a + b, 0);
         this.heartRateAvg = (sumHeartRates / heartRates.filter(x => x > 0).length) || 0;
-        this.heartRatePercent = this.heartRateAvg/this.heartRateMax;
 
         const rawIntensities = this.healthModels.map(x => x.rawIntensity);
         const sumRawIntensities = rawIntensities.reduce((a, b) => a + b, 0);
         this.rawIntensityAvg = (sumRawIntensities / rawIntensities.filter(x => x > 0).length) || 0;
-        this.rawIntensityPercent = this.rawIntensityAvg/this.rawIntensityMax;
 
         const steps = this.healthModels.map(x => x.steps);
         this.stepCountTotal = steps.reduce((a, b) => a + b, 0);
         this.stepCountPercent = this.stepCountTotal/this.stepCountMax;
 
         this.isLoading = false;
+      });
+  }
+
+  getWeightData(): void {
+
+    this.weightInput = null;
+
+    this.smartWatchService.getWeight(new Date(this.dateToShow.year, this.dateToShow.month - 1, this.dateToShow.day))
+      .subscribe(weightWrapperModel => {
+        if (weightWrapperModel.data && weightWrapperModel.data.weight) {
+          this.weight = weightWrapperModel.data.weight;
+          this.weightPercent = 2 - (this.weight / this.weightTarget);
+
+          //pre set input for modal popup
+          this.weightInput = this.weight;
+        }
+        else {
+          this.weight = 0;
+          this.weightPercent = 0;
+        }
       });
   }
 
@@ -86,12 +107,23 @@ export class HealthDetailsComponent implements OnInit {
   }
 
   onDateSelect($event): void {
-    this.getHealthData();
+    this.refreshData();
   }
 
   selectToday() {
     this.dateToShow = this.calendar.getToday();
-    this.getHealthData();
+    this.refreshData();
   }
 
+  saveAndUpdateWeight() {
+    //TODO validation
+    this.smartWatchService.setWeight(this.weightInput, new Date(this.dateToShow.year, this.dateToShow.month - 1, this.dateToShow.day));
+    this.weight = this.weightInput;
+    this.weightInput = null;
+  }
+
+  refreshData() {
+    this.getHealthData();
+    this.getWeightData();
+  }
 }
